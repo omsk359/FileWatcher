@@ -1,0 +1,36 @@
+Программа для мониторинга изменений файлов.
+Список файлов для наблюдения задается в файле, который должен быть передан программе через опцию -i.
+Изменения файлов определяются двумя способами: 
+1) через аттрибут файловой системы - время изменения файла (более быстный вариант)
+2) путем вычисления криптографически стойкой контрольной суммы md5
+Режим работы задается опцией -type. Он может быть, соответственно, mtime и hash.
+
+Пример:
+
+C:\test>type files.txt
+test1.txt
+test2.txt
+
+C:\test>FileWatcher.exe -i files.txt
+Read list of watching files...
+read line: test1.txt
+full path: C:\test\test1.txt
+read line: test2.txt
+full path: C:\test\test2.txt
+Total watched files: 2
+----------------------------------
+Load previous state...
+line: C:\test\test1.txt f1887d3f9e6ee7a32fe5e76f4ab80d63
+read state for 'C:\test\test1.txt' - 'f1887d3f9e6ee7a32fe5e76f4ab80d63'
+line: C:\test\test2.txt f1887d3f9e6ee7a32fe5e76f4ab80d63
+read state for 'C:\test\test2.txt' - 'f1887d3f9e6ee7a32fe5e76f4ab80d63'
+Total state files: 2
+----------------------------------
+Checking state...
+Hash of 'C:\test\test1.txt' is: '827ccb0eea8a706c4c34a16891f84e7b'
+C:\test\test1.txt -> modified
+Error opening file C:\test\test2.txt
+Error: 2
+C:\test\test2.txt -> file not found
+Total state:
+modified - 1; unmodifued - 0; deleted - 1; new - 0;
